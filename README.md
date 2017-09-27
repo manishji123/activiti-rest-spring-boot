@@ -1,5 +1,5 @@
 # activiti-rest-spring-boot
-activiti-rest integration with spring-boot. 
 
-This is the integration of activiti-rest with spring boot and it has couple of activiti-rest test.
+This project is the simple integration of activiti-rest with spring boot.
+
 Please check the com.manish.activiti.ActivitiRestTest class under src/test/java folder.
