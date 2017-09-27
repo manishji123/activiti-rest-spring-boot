@@ -4,10 +4,10 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@TestConfiguration
 public class InitializeBeansForTest {
 	@Bean
     InitializingBean usersAndGroupsInitializer(final IdentityService identityService) {
