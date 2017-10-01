@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 @TestConfiguration
 public class InitializeBeansForTest {
+	
 	@Bean
     InitializingBean usersAndGroupsInitializer(final IdentityService identityService) {
 

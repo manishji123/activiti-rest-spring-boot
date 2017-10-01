@@ -3,7 +3,6 @@
  */
 package com.manish.activiti.util;
 
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -18,16 +17,6 @@ import org.springframework.util.MultiValueMap;
  */
 public class DeployFile {
 	
-	private TestRestTemplate restTemplate;
-	private int port;
-	
-	
-	public DeployFile(TestRestTemplate restTemplate, int port) {
-		this.restTemplate= restTemplate;
-		this.port= port;
-	}
-	
-	
 	public String deploy(String filePath) throws Exception{
 		String status="";
 
@@ -40,7 +29,7 @@ public class DeployFile {
 				new HttpEntity<MultiValueMap<String, Object>>(parts, Util.getHttpHeaders(MediaType.MULTIPART_FORM_DATA));
 		
 		//Rest call
-		ResponseEntity<String> response = restTemplate.exchange(Util.createURLWithPort(port, "/repository/deployments"), 
+		ResponseEntity<String> response = Util.getRestTemplate().exchange(Util.createURL("/repository/deployments"), 
 						HttpMethod.POST, requestEntity, String.class);
 		
 		if (response != null) {

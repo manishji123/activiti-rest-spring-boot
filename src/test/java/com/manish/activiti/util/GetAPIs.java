@@ -5,8 +5,6 @@ package com.manish.activiti.util;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.boot.json.GsonJsonParser;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -19,24 +17,16 @@ import org.springframework.web.util.UriComponentsBuilder;
  */
 public class GetAPIs {
 	
-	private TestRestTemplate restTemplate;
-	private int port;
-	
-	
-	public GetAPIs(TestRestTemplate restTemplate, int port) {
-		this.restTemplate= restTemplate;
-		this.port= port;
-	}
 	
 	public String getProcessDefinitionId(String key) throws Exception{
 		String processDefinitionId="";
 		
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Util.createURLWithPort(port, "/repository/process-definitions"))
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Util.createURL("/repository/process-definitions"))
 		        .queryParam("latest", "true")		        
 		        .queryParam("key", key);
 				
 		ResponseEntity<String> response =
-				restTemplate.exchange(builder.toUriString(), 
+				Util.getRestTemplate().exchange(builder.toUriString(), 
 						HttpMethod.GET, new HttpEntity(Util.getHttpHeaders(MediaType.APPLICATION_JSON)), String.class);
 		
 		if (response != null) {
@@ -48,11 +38,11 @@ public class GetAPIs {
 	}
 	
 	public JSONObject getProcessTasks(String id) throws Exception {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Util.createURLWithPort(port, "/runtime/tasks"))
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(Util.createURL("/runtime/tasks"))
 		        .queryParam("processInstanceId", id);	        
 				
 		ResponseEntity<String> response =
-				restTemplate.exchange(builder.toUriString(), 
+				Util.getRestTemplate().exchange(builder.toUriString(), 
 						HttpMethod.GET, new HttpEntity(Util.getHttpHeaders(MediaType.APPLICATION_JSON)), String.class);
 		
 		if (response != null) {
@@ -66,7 +56,7 @@ public class GetAPIs {
 	
 	public JSONArray getProcessInstanceVariables(String processInstanceId) throws Exception {
 		ResponseEntity<String> response =
-				restTemplate.exchange(Util.createURLWithPort(port, "/runtime/process-instances/"+processInstanceId+"/variables"), 
+				Util.getRestTemplate().exchange(Util.createURL("/runtime/process-instances/"+processInstanceId+"/variables"), 
 						HttpMethod.GET,  new HttpEntity(Util.getHttpHeaders(MediaType.APPLICATION_JSON)), String.class);
 		
 		if (response != null) {
@@ -85,7 +75,7 @@ public class GetAPIs {
 	
 	public void getProcessInstance(String id) throws Exception {
 		ResponseEntity<String> response =
-				restTemplate.exchange(Util.createURLWithPort(port, "/runtime/process-instances/"+id), 
+				Util.getRestTemplate().exchange(Util.createURL("/runtime/process-instances/"+id), 
 						HttpMethod.GET, new HttpEntity(Util.getHttpHeaders(MediaType.APPLICATION_JSON)), String.class);
 		
 		if (response != null) {

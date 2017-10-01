@@ -7,6 +7,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -26,7 +27,18 @@ public class Util {
 		
 	}
 	
-	public static String createURLWithPort(int port, String uri) {
+	private static int port;
+	public static void setPort(int portVariable) {
+		port = portVariable;
+	}
+	
+	private static TestRestTemplate restTemplate = new TestRestTemplate();
+	public static TestRestTemplate getRestTemplate() {
+		return restTemplate;
+	}
+	
+	
+	public static String createURL(String uri) {
 		return "http://localhost:" + port + uri;
 	}
 	

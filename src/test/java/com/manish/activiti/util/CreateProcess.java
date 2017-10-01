@@ -20,16 +20,6 @@ import org.springframework.http.ResponseEntity;
  */
 public class CreateProcess {
 	
-	private TestRestTemplate restTemplate;
-	private int port;
-	
-	
-	public CreateProcess(TestRestTemplate restTemplate, int port) {
-		this.restTemplate= restTemplate;
-		this.port= port;
-	}
-	
-	
 	public String create(String processDefinitionId, List<Map<String, Object>> variables) throws Exception {
 		String id= "";
 		JSONObject request = new JSONObject();
@@ -37,7 +27,7 @@ public class CreateProcess {
 		request.put("variables", new JSONArray(variables));
 		
 		ResponseEntity<String> response =
-				restTemplate.exchange(Util.createURLWithPort(port, "/runtime/process-instances"), HttpMethod.POST, 
+				Util.getRestTemplate().exchange(Util.createURL("/runtime/process-instances"), HttpMethod.POST, 
 						new HttpEntity<String>(request.toString(), Util.getHttpHeaders(MediaType.APPLICATION_JSON))
 						, String.class);
 		
